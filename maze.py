@@ -20,7 +20,6 @@ class Maze:
         self._reset_cells_visited()
 
     def _create_cells(self):
-        print(f"steps: {self._cell_size_x}  starting range: {self._x1}  end range: {self._x1 + (self.num_cols * self._cell_size_x)}")
         for colm_x in range(self._x1, self._x1 + (self.num_cols * self._cell_size_x), self._cell_size_x):
             colum_cells = []
             for row_y in range(self._y1, self._y1 + (self.num_rows * self. _cell_size_y), self._cell_size_y):
@@ -35,7 +34,6 @@ class Maze:
 
     def _break_entrance_and_exit(self):
         self._cells[0][0].has_top_wall = False
-        print("meow")
         self._draw_cell(0,0)
         self._cells[-1][-1].has_bottom_wall = False
         self._draw_cell(-1,-1)
@@ -87,6 +85,47 @@ class Maze:
             for y in range(self.num_rows):
                 self._cells[x][y].visited = False
             
+    def solve(self):
+        return self._solve_r(0,0)
+
+    def _draw_navigation_line(self,x,y,next_x,next_y):
+        self._cells[x][y].draw_move(self._cells[x + next_x][y + next_y])
+        if self._solve_r(x + next_x,y + next_y):
+            return True
+        else:
+            self._cells[x][y].draw_move(self._cells[x + next_x][y + next_y], True)
+            return False
+
+    def _solve_r(self, x,y):
+        self._animate()
+        self._cells[x][y].visited = True
+        if x == self.num_cols - 1 and y == self.num_rows - 1:
+            return True
+        each_direction = [(0,1), (1,0),(-1,0), (0,-1)]
+        for direction in each_direction:
+            next_x, next_y = direction
+            if ((next_x + x) >= 0 and (next_x + x) <= self.num_cols - 1) and ((next_y + y) >= 0 and (next_y + y) <= self.num_rows - 1):
+                if not self._cells[x + next_x][y + next_y].visited:
+                    if next_y == 0:
+                        if next_x == 1:
+                            if not self._cells[x][y].has_right_wall:
+                                if self._draw_navigation_line(x,y,next_x,next_y):
+                                    return True
+                        else:
+                            if not self._cells[x][y].has_left_wall:
+                                if self._draw_navigation_line(x,y,next_x,next_y):
+                                    return True
+                    else:
+                        if next_y == 1:
+                            if not self._cells[x][y].has_bottom_wall:
+                                if self._draw_navigation_line(x,y,next_x,next_y):
+                                    return True
+                        else:
+                            if not self._cells[x][y].has_top_wall:
+                                if self._draw_navigation_line(x,y,next_x,next_y):
+                                    return True
+        return False
+
 
     def _draw_cell(self, i, j):
         if self._win is None:

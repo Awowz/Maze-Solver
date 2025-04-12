@@ -17,7 +17,7 @@ class Window:
         self.__is_window_running = True
         while self.__is_window_running:
             self.redraw()
-        print("window has been closed...")
+        print("Window has been closed.\nExiting...")
     
     def close(self):
         self.__is_window_running = False
@@ -76,7 +76,7 @@ class Cell:
         return Point(self._top_left_pos.x + distance_x, self._top_left_pos.y + distance_y)
         
     def draw_move(self, to_cell, undo=False):
-        line_color = "black"
+        line_color = "green"
         if undo:
             line_color = "red"
         line_connection = Line(self.get_center(), to_cell.get_center())
