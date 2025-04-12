@@ -51,18 +51,23 @@ class Cell:
     def draw(self):
         if self._win is None:
             return
-        if self.has_top_wall:
-            top = Line(Point(self._top_left_pos.x, self._top_left_pos.y), Point(self._bottom_right_pos.x, self._top_left_pos.y))
-            self._win.draw_line(top)
-        if self.has_bottom_wall:
-            bottom = Line(Point(self._top_left_pos.x, self._bottom_right_pos.y), Point(self._bottom_right_pos.x, self._bottom_right_pos.y))
-            self._win.draw_line(bottom)
-        if self.has_right_wall:
-            right = Line(Point(self._bottom_right_pos.x, self._top_left_pos.y), Point(self._bottom_right_pos.x, self._bottom_right_pos.y))
-            self._win.draw_line(right)
-        if self.has_left_wall:
-            left = Line(Point(self._top_left_pos.x, self._top_left_pos.y), Point(self._top_left_pos.x, self._bottom_right_pos.y))
-            self._win.draw_line(left)
+        top_c = bottom_c = right_c = left_c = "white"
+        if self.has_top_wall: top_c = "black"
+        if self.has_bottom_wall: bottom_c = "black"
+        if self.has_right_wall: right_c = "black"
+        if self.has_left_wall: left_c = "black"
+        
+        top = Line(Point(self._top_left_pos.x, self._top_left_pos.y), Point(self._bottom_right_pos.x, self._top_left_pos.y))
+        self._win.draw_line(top, top_c)
+        
+        bottom = Line(Point(self._top_left_pos.x, self._bottom_right_pos.y), Point(self._bottom_right_pos.x, self._bottom_right_pos.y))
+        self._win.draw_line(bottom, bottom_c)
+        
+        right = Line(Point(self._bottom_right_pos.x, self._top_left_pos.y), Point(self._bottom_right_pos.x, self._bottom_right_pos.y))
+        self._win.draw_line(right, right_c)
+        
+        left = Line(Point(self._top_left_pos.x, self._top_left_pos.y), Point(self._top_left_pos.x, self._bottom_right_pos.y))
+        self._win.draw_line(left, left_c)
         
     def get_center(self) -> Point:
         distance_x = abs(self._bottom_right_pos.x - self._top_left_pos.x) // 2

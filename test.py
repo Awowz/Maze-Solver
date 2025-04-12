@@ -13,5 +13,14 @@ class Test(unittest.TestCase):
         self.assertEqual(m1._cell_size_x, cell_size_x)
         self.assertEqual(m1._cell_size_y, cell_size_y)
 
+    def test_maze_open_exit(self):
+        num_cols = 12
+        num_rows = 10
+        cell_size_x = 5
+        cell_size_y = 15
+        m1 = Maze(0,0,num_rows,num_cols,cell_size_x,cell_size_y,None)
+        self.assertEqual(m1._cells[0][0].has_top_wall,False)
+        self.assertEqual(m1._cells[-1][-1].has_bottom_wall,False)
+
 if __name__ == "__main__":
     unittest.main()

@@ -12,6 +12,7 @@ class Maze:
         self._win = win
         self._cells = []
         self._create_cells()
+        self._break_entrance_and_exit()
 
     def _create_cells(self):
         print(f"steps: {self._cell_size_x}  starting range: {self._x1}  end range: {self._x1 + (self.num_cols * self._cell_size_x)}")
@@ -27,6 +28,13 @@ class Maze:
             for j in range(self.num_rows):
                 self._draw_cell(i,j)
 
+    def _break_entrance_and_exit(self):
+        self._cells[0][0].has_top_wall = False
+        print("meow")
+        self._draw_cell(0,0)
+        self._cells[-1][-1].has_bottom_wall = False
+        self._draw_cell(-1,-1)
+
     def _draw_cell(self, i, j):
         if self._win is None:
             return
@@ -37,4 +45,4 @@ class Maze:
         if self._win is None:
             return
         self._win.redraw()
-        time.sleep(0.05)
+        time.sleep(0.005)
