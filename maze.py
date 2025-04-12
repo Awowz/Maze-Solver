@@ -28,9 +28,13 @@ class Maze:
                 self._draw_cell(i,j)
 
     def _draw_cell(self, i, j):
+        if self._win is None:
+            return
         self._cells[i][j].draw()
         self._animate()
 
     def _animate(self):
+        if self._win is None:
+            return
         self._win.redraw()
         time.sleep(0.05)

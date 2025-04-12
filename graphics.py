@@ -49,6 +49,8 @@ class Cell:
         self._win = window
 
     def draw(self):
+        if self._win is None:
+            return
         if self.has_top_wall:
             top = Line(Point(self._top_left_pos.x, self._top_left_pos.y), Point(self._bottom_right_pos.x, self._top_left_pos.y))
             self._win.draw_line(top)
