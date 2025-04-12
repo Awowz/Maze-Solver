@@ -47,6 +47,7 @@ class Cell:
         self._top_left_pos = top_left_pos
         self._bottom_right_pos = bottom_right_pos
         self._win = window
+        self.visited = False
 
     def draw(self):
         if self._win is None:
