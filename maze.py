@@ -97,7 +97,7 @@ class Maze:
             return False
 
     def _solve_r(self, x,y):
-        self._animate()
+        self._animate(0.05)
         self._cells[x][y].visited = True
         if x == self.num_cols - 1 and y == self.num_rows - 1:
             return True
@@ -133,8 +133,8 @@ class Maze:
         self._cells[i][j].draw()
         self._animate()
 
-    def _animate(self):
+    def _animate(self,delay= 0.005):
         if self._win is None:
             return
         self._win.redraw()
-        time.sleep(0.005)
+        time.sleep(delay)
